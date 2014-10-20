@@ -29,36 +29,42 @@ var PhoneSchema = new Schema({
 		type:[String],
 		trim: true,
 		default: '',
+		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available GSMBands for this phone']
 	},
 	LTEFDDBands: {
 		type:[String],
 		trim: true,
 		default: '',
+		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available LTEFDDBands for this phone']
 	},
 	ModelNumber: {
 		type: String,
 		trim: false,
 		default: '',
+		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the Model for this phone']
 	},
 	Name: {
 		type: String,
 		trim: false,
 		default: '',
+		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the Name of this phone']
 	},
 	UMTSBands:{
 		type:[String],
 		trim: false,
 		default: '',
+		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available UMTSBands for this phone']
 	},
 	TDSCDMABands: {
 		type:[String],
 		trim: false,
 		default: '',
+		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available TD-SCDMABands for this phone']
 	},
 	user: {

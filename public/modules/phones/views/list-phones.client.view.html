@@ -1,0 +1,24 @@
+<section data-ng-controller="PhonesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Phones</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="phone in phones" data-ng-href="#!/phones/{{phone._id}}" class="list-group-item">
+			Name:
+			<h4 class="list-group-item-heading" data-ng-bind="phone.Name"></h4>
+			ModelNumber:
+			<h4 class="list-group-item-heading" data-ng-bind="phone.ModelNumber"></h4>
+			GSM Bands:
+			<h4 class="list-group-item-heading" data-ng-bind="phone.GSMBands"></h4>
+			LTE FDD Bands:
+			<h4 class="list-group-item-heading" data-ng-bind="phone.LTEFDDBands"></h4>
+			UMTS Bands:
+			<h4 class="list-group-item-heading" data-ng-bind="phone.UMTSBands"></h4>
+			TD-SCDMA Bands:
+			<h4 class="list-group-item-heading" data-ng-bind="phone.TDSCDMABands"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!phones.$resolved || phones.length">
+    	No phones yet, why don't you <a href="/#!/phones/create">create one</a>?
+    </div>
+</section>

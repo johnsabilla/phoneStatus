@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://narutoisover:narutoisover123456@alcatraz.0.mongolayer.com:10019,alcatraz.1.mongolayer.com:10019/our-beta-database',
+	//db: 'mongodb://narutoisover:narutoisover123456@alcatraz.0.mongolayer.com:10019,alcatraz.1.mongolayer.com:10019/our-beta-database',
+	db: 'mongodb://localhost/phoneStatus',
 	app: {
 		title: 'phoneStatus - Development Environment'
 	},
