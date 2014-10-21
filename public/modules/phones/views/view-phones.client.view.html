@@ -12,10 +12,21 @@
 	</div>
 	<small>
 		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="phone.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="phone.user.displayName"></span>
+			Phone info: 
+			<br/>
+			name: <span data-ng-bind="phone.Name"></span>
+			<br/>
+			model number: <span data-ng-bind="phone.ModelNumber"></span>
+			<br/>
+			gsm bands: <span data-ng-bind="phone.GSMBands"></span>
+			<br/>
+			umts bands: <span data-ng-bind="phone.UMTSBands"></span>
+			<br/>
+			ltefdd bands: <span data-ng-bind="phone.LTEFDDBands"></span>
+			<br/>
+			td-scdma bands: <span data-ng-bind="phone.TDSCDMABands"></span>
+			<br/>
+			added by: <span data-ng-bind="phone.user.displayName"></span>
 		</em>
 	</small>
 </section>

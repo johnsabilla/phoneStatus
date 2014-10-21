@@ -9,13 +9,13 @@
 			ModelNumber:
 			<h4 class="list-group-item-heading" data-ng-bind="phone.ModelNumber"></h4>
 			GSM Bands:
-			<h4 class="list-group-item-heading" data-ng-bind="phone.GSMBands"></h4>
+			<h4 data-ng-repeat="gsmband in phone.GSMBands" class="list-group-item-heading" data-ng-bind="gsmband"></h4>
 			LTE FDD Bands:
-			<h4 class="list-group-item-heading" data-ng-bind="phone.LTEFDDBands"></h4>
+			<h4 data-ng-repeat="ltebands in phone.LTEFDDBands" class="list-group-item-heading" data-ng-bind="ltebands"></h4>
 			UMTS Bands:
-			<h4 class="list-group-item-heading" data-ng-bind="phone.UMTSBands"></h4>
+			<h4 data-ng-repeat="umtsbands in phone.UMTSBands" class="list-group-item-heading" data-ng-bind="umtsbands"></h4>
 			TD-SCDMA Bands:
-			<h4 class="list-group-item-heading" data-ng-bind="phone.TDSCDMABands"></h4>
+			<h4 data-ng-repeat="tdscdma in phone.TDSCDMABands" class="list-group-item-heading" data-ng-bind="tdscdma"></h4>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!phones.$resolved || phones.length">
