@@ -11,12 +11,19 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 			// Create new phone object
 			var phone = new Phones ({
 				Name: this.name,
-				GSMBands: this.gsmbands,
-				LTEFDDBands: this.ltefddbands,
+				GSMBands: [],
+				LTEFDDBands: [],
 				ModelNumber: this.modelnumber,
-				UMTSBands: this.umtsbands,
-				TDSCDMABands: this.tdscdmabands
+				UMTSBands: [],
+				TDSCDMABands: []
 			});
+			
+			// Convert comma separated string to array of strings and add to phone
+			phone.GSMBands.push.apply(phone.GSMBands, this.gsmbands.split(','));
+			phone.LTEFDDBands.push.apply(phone.LTEFDDBands, this.ltefddbands.split(','));
+			phone.UMTSBands.push.apply(phone.UMTSBands, this.umtsbands.split(','));
+			phone.TDSCDMABands.push.apply(phone.TDSCDMABands, this.tdscdmabands.split(','));
+
 			// Redirect after save
 			phone.$save(function(response) {
 				$location.path('phones/' + response._id);
@@ -44,7 +51,7 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 					}
 				}
 			} else {
-				$scope.article.$remove(function() {
+				$scope.phone.$remove(function() {
 					$location.path('phones');
 				});
 			}
@@ -52,7 +59,13 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 
 		// Update existing phone
 		$scope.update = function() {
-			var phone = $scope.phone ;
+
+			//Make sure that we re-insert the string as an array of strings
+			$scope.phone.GSMBands = $scope.phone.GSMBands.split(',');
+			$scope.phone.UMTSBands = $scope.phone.UMTSBands.split(',');
+			$scope.phone.LTEFDDBands = $scope.phone.LTEFDDBands.split(',');
+			$scope.phone.TDSCDMABands = $scope.phone.TDSCDMABands.split(',');
+			var phone = $scope.phone;
 
 			phone.$update(function() {
 				$location.path('phones/' + phone._id);
