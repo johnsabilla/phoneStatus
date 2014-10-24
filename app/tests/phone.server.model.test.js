@@ -5,39 +5,39 @@
  */
 var should = require('should'),
 	mongoose = require('mongoose'),
-	Phone = mongoose.model('Phone'),
-	User = mongoose.model('User');
+	Phone = mongoose.model('Phone');
+	//User = mongoose.model('User');
 
 /**
  * Globals
  */
-var user, phone;
+var  phone;
 
 describe('Phone Model Unit Tests:', function() {
 	beforeEach(function(done) {
-		user = new User({
+/*		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
 			username: 'username',
 			password: 'password'
-		});
+		});*/
 
 
-		user.save(function() { 
+		/*user.save(function() { */
 			phone = new Phone({
-				GSMBands: ['GSM1', 'GSM2', 'GSM3', 'GSM4'],
-				LTEFDDBands: ['LTEFDDBand1', 'LTEFDDBand2', 'LTEFDDBand3', 'LTEFDDBand4'],
+				GSMBands: [11, 22, 33, 33],
+				LTEFDDBands: [44, 55, 66, 77],
 				ModelNumber: 'ABC123',
 				Name: 'SAMPHONE',
-				UMTSBands: ['UMTSBand1', 'UMTSBand2', 'UMTSBand3', 'UMTSBand4'],
-				TDSCDMABands: ['TD-SCDMABand1', 'TD-SCDMABand2', 'TD-SCDMABand3', 'TD-SCDMABand4'],
-				User: user
+				UMTSBands: [88, 99, 40, 11],
+				TDSCDMABands: [33, 66, 88, 90]
+				//User: user
 			});
 
 			done();
-		});
+		
 	});
 
 
@@ -113,6 +113,44 @@ describe('Phone Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+				// no GSMBand should fail
+		it('should not be able to save if TDSCDMABands supplied is type string', function(done) {
+			phone.TDSCDMABands = 'string';
+
+			return phone.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should not be able to save if GSMBands supplied is type string', function(done) {
+			phone.GSMBands = 'string';
+			
+			return phone.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should not be able to save if UMTSBands supplied is type string', function(done) {
+			phone.UMTSBands = 'string';
+
+			return phone.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should not be able to save if LTEFDDBands supplied is type string', function(done) {
+			phone.LTEFDDBands = 'string';
+
+			return phone.save(function(err){
+				should.exist(err);
+				done();
+			});
+		});
+
 	});
 
 	
@@ -121,7 +159,7 @@ describe('Phone Model Unit Tests:', function() {
 
 	afterEach(function(done) { 
 		Phone.remove().exec();
-		User.remove().exec();
+		//User.remove().exec();
 
 		done();
 	});

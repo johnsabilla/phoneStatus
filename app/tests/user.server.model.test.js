@@ -1,20 +1,20 @@
-'use strict';
+/*'use strict';*/
 
 /**
  * Module dependencies.
  */
-var should = require('should'),
+/*var should = require('should'),
 	mongoose = require('mongoose'),
-	User = mongoose.model('User');
+	User = mongoose.model('User');*/
 
 /**
  * Globals
  */
-var user, user2;
+/*var user, user2;*/
 
 /**
  * Unit tests
- */
+ *//*
 describe('User Model Unit Tests:', function() {
 	before(function(done) {
 		user = new User({
@@ -72,4 +72,4 @@ describe('User Model Unit Tests:', function() {
 		User.remove().exec();
 		done();
 	});
-});
+});*/

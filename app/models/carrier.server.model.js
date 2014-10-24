@@ -24,29 +24,28 @@ var validateLocalStrategyPassword = function(password) {
 
 
 
-var BandSchema = new Schema({
-	Carrier: {
-		type: Schema.ObjectId,
-		ref: 'Carrier'
-	},
-	Frequency: {
-		type: Number,
-		trim: true,
-		default: '',
-		required: true,
-		validate: [validateLocalStrategyProperty,'Please fill in the available Frequency']
-	},
-	Protocol: {
+var CarrierSchema = new Schema({
+	CarrierName: {
 		type: String,
 		trim: true,
 		default: '',
 		required: true,
-		validate: [validateLocalStrategyProperty,'Please fill in the available Protocol']
+		validate: [validateLocalStrategyProperty,'Please fill in the available CarrierName']
 	},
-	Phone: {
-		type: Schema.ObjectId,
-		ref: 'Phone'
+	Country: {
+		type: String,
+		trim: true,
+		default: '',
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available Country']
+	},
+	Bands: {
+		type: [Number],
+		trim: true,
+		default: 0,
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available Bands']
 	}
 });
 
-mongoose.model('Band', BandSchema);
+mongoose.model('Carrier', CarrierSchema);
