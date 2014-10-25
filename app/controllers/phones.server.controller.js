@@ -17,7 +17,7 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var phone = new Phone(req.body);
-	//phone.user = req.user;
+	phone.user = req.user;
 
 	console.log('useid', phone.user);
 

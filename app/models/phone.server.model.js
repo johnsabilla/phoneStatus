@@ -68,9 +68,9 @@ var PhoneSchema = new Schema({
 		validate: [validateLocalStrategyProperty,'Please fill in the available TD-SCDMABands for this phone']
 	},
 	//No more users 
-	/*	user: {
+		user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}*/
+	}
 });
 mongoose.model('Phone', PhoneSchema);

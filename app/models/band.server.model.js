@@ -25,10 +25,6 @@ var validateLocalStrategyPassword = function(password) {
 
 
 var BandSchema = new Schema({
-	Carrier: {
-		type: Schema.ObjectId,
-		ref: 'Carrier'
-	},
 	Frequency: {
 		type: Number,
 		trim: true,
@@ -42,6 +38,10 @@ var BandSchema = new Schema({
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Protocol']
+	},
+	Carrier: {
+		type: Schema.ObjectId,
+		ref: 'Carrier'
 	},
 	Phone: {
 		type: Schema.ObjectId,
