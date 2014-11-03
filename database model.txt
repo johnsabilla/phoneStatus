@@ -3,7 +3,6 @@ Carriers
 ------------------------------
 Country					String
 CarrierName				String
-Bands					Number
 
 ------------------------------
 Bands
@@ -11,7 +10,6 @@ Bands
 Frequency				Number
 Protocol				String
 Carrier					ObjID
-Phone					ObjID
 
 ------------------------------
 Phones
@@ -22,6 +20,7 @@ ModelNumber				String
 Name					String
 UMTSBands				Number
 TDSCDMABands			Number
+Bands					ObjID
 ~Users					ObjID
 
 ------------------------------

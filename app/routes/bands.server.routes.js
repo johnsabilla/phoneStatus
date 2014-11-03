@@ -1,7 +1,7 @@
 'use strict';
 
 	//var users = require('../../app/controllers/users');
-	var phones = require('../../app/controllers/phones');
+	//var phones = require('../../app/controllers/phones');
 	var bands = require('../../app/controllers/bands');
 	module.exports = function(app) {
 

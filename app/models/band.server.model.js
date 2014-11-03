@@ -14,21 +14,12 @@ var validateLocalStrategyProperty = function(property) {
 	return ((this.provider !== 'local' && !this.updated) || property.length);
 };
 
-/**
- * A Validation function for local strategy password
- */
-var validateLocalStrategyPassword = function(password) {
-	return (this.provider !== 'local' || (password && password.length > 6));
-};
-
-
-
 
 var BandSchema = new Schema({
 	Frequency: {
 		type: Number,
 		trim: true,
-		default: '',
+		default: 0,
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Frequency']
 	},
@@ -41,11 +32,8 @@ var BandSchema = new Schema({
 	},
 	Carrier: {
 		type: Schema.ObjectId,
-		ref: 'Carrier'
-	},
-	Phone: {
-		type: Schema.ObjectId,
-		ref: 'Phone'
+		ref: 'Carrier',
+		required: true
 	}
 });
 

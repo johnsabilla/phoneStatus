@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var Band = new Band(req.body);
 	//Band.user = req.user;
-	Band.phone = req.phone;
+	Band.carrier = req.carrier;
 
 	Band.save(function(err) {
 		if (err) {
@@ -63,7 +63,8 @@ exports.read = function(req, res) {
 /**
  *  read function (show all of the band)
  */
-exports.list = function(req, res) { Band.find().sort('-created').populate('user', 'displayName').exec(function(err, Band) {
+ /*function(req, res) { Band.find().sort('-created').populate('user', 'displayName').exec(function(err, Band) */
+exports.list = function(req, res) { Band.find().exec(function(err, Band)  {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
