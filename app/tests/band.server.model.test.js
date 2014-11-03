@@ -15,7 +15,8 @@ var should = require('should'),
  */
 var band,
  	bandIDs = [],
- 	carrier;
+ 	carrier,
+ 	carrierIDs = [];
 
 describe('Band model Unit Tests:', function() {
 	
@@ -31,7 +32,7 @@ describe('Band model Unit Tests:', function() {
 
 		carrier.save(function(){ 
 			band = new Band({
-				Frequency: 1500,
+				Frequency: 9999,
 				Protocol: 'GSM',
 				Carrier: carrier
 		});
@@ -66,7 +67,7 @@ describe('Band model Unit Tests:', function() {
 		});
 
 		it('should be able save a band with valid Frequency', function(done) {
-			band.Frequency = 2000;
+			band.Frequency = 9999;
 			return band.save(function(err) {
 			    should.not.exist(err);
 			    done();
@@ -105,7 +106,7 @@ describe('Band model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able save a band with null carrier', function(done) {
+		it('should not be able save a band with null carrier', function(done) {
 			band.Carrier = null;
 			return band.save(function(err) {
 			    should.exist(err);
@@ -113,7 +114,33 @@ describe('Band model Unit Tests:', function() {
 			});
 		});
 
+		it('should be able save a band with valid carrier', function(done) {
+			
+			Carrier.find({ CarrierName:'FakeBandCarrier'}, function(err, carrier){
+					if(err)
+						return err;
+					carrierIDs = carrier;
+					band.Carrier = carrier;
+			});
+		
+			return band.save(function(err) {
+			    should.not.exist(err);
+			    done();
+			});
+		});
+	});
 
+
+	afterEach(function(done) { 
+
+		/* delete the carrier test doc to keep database clean */
+		for(var i = 0; i < carrierIDs.length; i++){
+			//console.log('carrierID', carrierIDs[i]._id);
+			Carrier.remove({ _id: carrierIDs[i]._id}).exec();
+		}
+
+		Band.remove({ Frequency: 9999}).exec();
+		done();
 	});
 
 });
