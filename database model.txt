@@ -5,10 +5,11 @@ Country					String
 CarrierName				String
 
 ------------------------------
-Bands
+Bands not an array
 ------------------------------
 Frequency				Number
-Protocol				String
+Protocol				String 
+Band					Number 
 Carrier					ObjID
 
 ------------------------------
@@ -20,7 +21,7 @@ ModelNumber				String
 Name					String
 UMTSBands				Number
 TDSCDMABands			Number
-Bands					ObjID
+~Bands					ObjID
 ~Users					ObjID
 
 ------------------------------

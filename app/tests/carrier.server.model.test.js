@@ -21,8 +21,7 @@ describe('Carrier model Unit Tests:', function() {
 
 		carrier = new Carrier({
 		  	CarrierName: 'FakeCarrier',
-		  	Country: 'USJ',
-		  	Bands: [2,4,8,16,32]
+		  	Country: 'USJ'
 		});
 
 		done();
@@ -48,14 +47,6 @@ describe('Carrier model Unit Tests:', function() {
 
 		it('should not be able save a carrier with empty Country', function(done) {
 			carrier.Country = '';
-			return carrier.save(function(err) {
-			    should.exist(err);
-			    done();
-			});
-		});
-
-		it('should not be able save a carrier with empty bands', function(done) {
-			carrier.Bands = [];
 			return carrier.save(function(err) {
 			    should.exist(err);
 			    done();

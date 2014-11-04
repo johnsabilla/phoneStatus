@@ -30,6 +30,13 @@ var BandSchema = new Schema({
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Protocol']
 	},
+	Band: {
+		type: Number,
+		trim: true,
+		default: 0,
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available Frequency']
+	},
 	Carrier: {
 		type: Schema.ObjectId,
 		ref: 'Carrier',

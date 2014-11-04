@@ -29,13 +29,6 @@ var CarrierSchema = new Schema({
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Country']
-	},
-	Bands: {
-		type: [Number],
-		trim: true,
-		default: 0,
-		required: true,
-		validate: [validateLocalStrategyProperty,'Please fill in the available Bands']
 	}
 });
 

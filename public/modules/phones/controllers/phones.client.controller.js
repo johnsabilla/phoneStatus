@@ -86,6 +86,12 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 			$scope.phone = Phones.get({ 
 				phoneId: $stateParams.phoneId
 			});
+
+			
+			console.log('test');
+	/*		$scope.band = Bands.get({
+				band: 
+			});*/
 		};
 		
 	}

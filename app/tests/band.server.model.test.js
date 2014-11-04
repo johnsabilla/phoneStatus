@@ -25,8 +25,7 @@ describe('Band model Unit Tests:', function() {
 
 		carrier = new Carrier({
 		  	CarrierName: 'FakeBandCarrier',
-		  	Country: 'USUSUS',
-		  	Bands: [2,4,8,16,32]
+		  	Country: 'USUSUS'
 		});
 
 
@@ -34,6 +33,7 @@ describe('Band model Unit Tests:', function() {
 			band = new Band({
 				Frequency: 9999,
 				Protocol: 'GSM',
+				Band: 5000,
 				Carrier: carrier
 		});
 
@@ -92,6 +92,31 @@ describe('Band model Unit Tests:', function() {
 
 		it('should be able save a band with valid protocol', function(done) {
 			band.Protocol = 'GSM';
+			return band.save(function(err) {
+			    should.not.exist(err);
+			    done();
+			});
+		});
+
+
+		it('should not be able save a band with invalid band', function(done) {
+			band.Band = '';
+			return band.save(function(err) {
+			    should.exist(err);
+			    done();
+			});
+		});
+
+		it('should not be able save a band with invalid band', function(done) {
+			band.Band = null;
+			return band.save(function(err) {
+			    should.exist(err);
+			    done();
+			});
+		});
+
+		it('should be able save a band with valid band', function(done) {
+			band.Band = 1500;
 			return band.save(function(err) {
 			    should.not.exist(err);
 			    done();
