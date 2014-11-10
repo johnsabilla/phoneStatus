@@ -99,52 +99,6 @@ exports.delete = function(req, res) {
 	});
 };
 
-
-
-function checkBand(phone){
-
-	console.log('phone', phone);
-
-	Band.find().exec(function (err, bands){
-		if(err) return (err);
-
-		var sbands=[];
-		var sphoneGSM = phone.GSMBands;
-	
-
-		for(var x = 0; x < bands.length; x++){
-			sbands.push(bands[x].Band);
-		}
-
-		sbands = sbands.sort(function(a,b){
-		 	return a-b;
-		});
-
-		sphoneGSM = sphoneGSM.sort(function(a,b) {
-			return a-b;
-		});
-
-						
-		for(var a = 0; a < sphoneGSM.length; a++){
-			for(var b = 0; b < sbands.length; b++){
-				if(sphoneGSM[a] === sbands[b]){
-					phone.Band = sphoneGSM[a];
-						
-					console.log('phone.Band', phone.Band);
-
-					console.log('we have a match', sphoneGSM[a], sbands[b]);
-						
-					return;
-				}
-			}
-		}
-
-
-	});
-
-}
-
-
 exports.phoneByID = function(req, res, next, id) { 
 
 		async.parallel([
