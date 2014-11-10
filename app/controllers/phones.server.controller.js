@@ -99,8 +99,16 @@ exports.delete = function(req, res) {
 	});
 };
 
+/* phyByID - grabs all of the phone information.
+ *			 We also compare if any of the supported bands
+ *			 are supported by a specific carrier. 
+ */
 exports.phoneByID = function(req, res, next, id) { 
 
+		/*
+		 *  used async parallel to query multiple models in database and keep everything asynchronous
+		 *  since mongodb is synchronous. 
+		 */
 		async.parallel([
 
 			function(callback) {
@@ -114,9 +122,11 @@ exports.phoneByID = function(req, res, next, id) {
 			},
 
 			function(callback) {
-				Band.find().exec(function(err, bands) {
+				Band.find().populate('Carrier', 'CarrierName').exec(function(err, bands) {
 					if(err) return callback(err);
-					if(!bands) return callback(new Error('Failed to load Band ' + id));
+					if(!bands) return callback(new Error('Failed to load Band '));
+
+				//	console.log('bands inside', bands.carrier);
 
 					callback(null, bands);
 				});
@@ -124,6 +134,10 @@ exports.phoneByID = function(req, res, next, id) {
 
 			],
 
+			/*
+			 * using the result sets that we grabbed from phone and bands, check if the
+			 * phone is supported
+			 */
 			function(err,res) {
 				if(err){
 					console.log(err);
@@ -133,31 +147,30 @@ exports.phoneByID = function(req, res, next, id) {
 				if(res === null || res[0] === null || res[1] === null) {
 					return res.status(400).send('objects are null');
 				}
+
 				var bands = res[1];
 				var phone = res[0];
 
-				console.log('bands ', res[1]);
-				console.log('phones ', res[0]);
-
+				console.log('bands ', bands[0]);
+				console.log('phones ', phone);
 
 				var sbands=[];
 				var sphoneGSM = phone.GSMBands;
-				var sphoneLTEFDD = phone.LTEFDDBands;
-			
+				var sphoneLTEFDD = phone.LTEFDDBands;			
 
+				//query all bands that are GSM
 				for(var x = 0; x < bands.length; x++){
 					if(bands[x].Protocol === 'GSM'){
-						sbands.push(bands[x].Band);
+						sbands.push(bands[x]);
 					}
-					/*if(bands[x]).Protocol === 'LTEFDD'){
-						sbands.push(bands[x].Band);
-					}*/
 				}
 
+				//sort the bands
 				sbands = sbands.sort(function(a,b){
 				 	return a-b;
 				});
 
+				//sort the GSM bands supported by phone
 				sphoneGSM = sphoneGSM.sort(function(a,b) {
 					return a-b;
 				});
@@ -165,10 +178,12 @@ exports.phoneByID = function(req, res, next, id) {
 				console.log('bands ', sbands);
 				console.log('phones ', sphoneGSM);
 
+				//find a band that the phone supports
 				for(var a = 0; a < sphoneGSM.length; a++){
 					for(var b = 0; b < sbands.length; b++){
-						if(sphoneGSM[a] === sbands[b]){
-							phone.Band = 'yes, match: ' + sphoneGSM[a];
+						if(sphoneGSM[a] === sbands[b].Band){
+							
+							phone.Band = 'yes, match: ' + sphoneGSM[a] + ' ' + sbands[b].Carrier.CarrierName;
 								
 							console.log('phone.Band', phone.Band);
 							console.log('we have a match', sphoneGSM[a], sbands[b]);

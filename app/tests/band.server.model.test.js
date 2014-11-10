@@ -24,7 +24,7 @@ describe('Band model Unit Tests:', function() {
 	beforeEach(function(done) {
 
 		carrier = new Carrier({
-		  	CarrierName: 'FakeBandCarrier',
+		  	CarrierName: 'ATT',
 		  	Country: 'US'
 		});
 
@@ -116,7 +116,7 @@ describe('Band model Unit Tests:', function() {
 		});
 
 		it('should be able save a band with valid band', function(done) {
-			band.Band = 1800;
+			band.Band = 850;
 			return band.save(function(err) {
 			    should.not.exist(err);
 			    done();
