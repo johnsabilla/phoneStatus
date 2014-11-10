@@ -16,17 +16,23 @@
 			<br/>
 			name: <span data-ng-bind="phone.Name"></span>
 			<br/>
-			model number: <span data-ng-bind="phone.ModelNumber"></span>
+			model number: 
+			<span data-ng-bind="phone.ModelNumber"></span>
 			<br/>
-			gsm bands: <span data-ng-bind="phone.GSMBands"></span>
+			gsm bands:
+			<span data-ng-repeat="gsmband in phone.GSMBands"> {{gsmband}}Ghz </span>
 			<br/>
-			umts bands: <span data-ng-bind="phone.UMTSBands"></span>
+			umts bands:
+			<span data-ng-repeat="umtsband in phone.UMTSBands"> {{umtsband}}Ghz </span>
 			<br/>
-			ltefdd bands: <span data-ng-bind="phone.LTEFDDBands"></span>
+			ltefdd bands:
+			<span data-ng-repeat="ltefddband in phone.LTEFDDBands"> {{ltefddband}}Ghz </span>
 			<br/>
-			td-scdma bands: <span data-ng-bind="phone.TDSCDMABands"></span>
+			td-scdma bands:
+			<span data-ng-repeat="tdscdmaband in phone.TDSCDMABands"> {{tdscdmaband}}Ghz </span>
 			<br/>
-			added by: <span data-ng-bind="phone.user.displayName"></span>
+			 works in 'murica?: <span data-ng-bind="phone.Band"></span> 
 		</em>
 	</small>
+
 </section>

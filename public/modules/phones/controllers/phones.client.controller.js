@@ -1,8 +1,8 @@
 'use strict';
 
 // Phones controller
-angular.module('phones').controller('PhonesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Phones',
-	function($scope, $stateParams, $location, Authentication, Phones ) {
+angular.module('phones').controller('PhonesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Phones', 
+	function($scope, $stateParams, $location, Authentication, Phones) {
 		$scope.authentication = Authentication;
 
 		// Create new phone
@@ -87,11 +87,14 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 				phoneId: $stateParams.phoneId
 			});
 
-			
-			console.log('test');
-	/*		$scope.band = Bands.get({
-				band: 
-			});*/
+		};
+
+		// Find existing phone
+		$scope.checkBand = function() {
+			$scope.phone = Phones.get({ 
+				phoneId: $stateParams.phoneId
+			});
+
 		};
 		
 	}

@@ -25,15 +25,15 @@ describe('Band model Unit Tests:', function() {
 
 		carrier = new Carrier({
 		  	CarrierName: 'FakeBandCarrier',
-		  	Country: 'USUSUS'
+		  	Country: 'US'
 		});
 
 
 		carrier.save(function(){ 
 			band = new Band({
-				Frequency: 9999,
+				Frequency: 500,
 				Protocol: 'GSM',
-				Band: 5000,
+				Band: 5,
 				Carrier: carrier
 		});
 
@@ -116,7 +116,7 @@ describe('Band model Unit Tests:', function() {
 		});
 
 		it('should be able save a band with valid band', function(done) {
-			band.Band = 1500;
+			band.Band = 1800;
 			return band.save(function(err) {
 			    should.not.exist(err);
 			    done();
@@ -159,10 +159,10 @@ describe('Band model Unit Tests:', function() {
 	afterEach(function(done) { 
 
 		/* delete the carrier test doc to keep database clean */
-		for(var i = 0; i < carrierIDs.length; i++){
+/*		for(var i = 0; i < carrierIDs.length; i++){
 			//console.log('carrierID', carrierIDs[i]._id);
 			Carrier.remove({ _id: carrierIDs[i]._id}).exec();
-		}
+		}*/
 
 		Band.remove({ Frequency: 9999}).exec();
 		done();
