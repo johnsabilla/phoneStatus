@@ -36,11 +36,6 @@ var BandSchema = new Schema({
 		default: 0,
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Frequency']
-	},
-	Carrier: {
-		type: Schema.ObjectId,
-		ref: 'Carrier',
-		required: true
 	}
 });
 

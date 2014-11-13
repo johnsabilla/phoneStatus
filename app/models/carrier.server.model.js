@@ -29,7 +29,11 @@ var CarrierSchema = new Schema({
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Country']
-	}
+	},
+	Bands: {
+		type: [Schema.ObjectId],
+		ref: 'Band'
+	} 
 });
 
 mongoose.model('Carrier', CarrierSchema);

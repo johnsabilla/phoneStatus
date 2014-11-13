@@ -151,8 +151,8 @@ exports.phoneByID = function(req, res, next, id) {
 				var bands = res[1];
 				var phone = res[0];
 
-				console.log('bands ', bands[0]);
-				console.log('phones ', phone);
+				//console.log('bands ', bands[0]);
+				//console.log('phones ', phone);
 
 				var sbands=[];
 				var sphoneGSM = phone.GSMBands;
@@ -185,8 +185,8 @@ exports.phoneByID = function(req, res, next, id) {
 							
 							phone.Band = 'yes, match: ' + sphoneGSM[a] + ' ' + sbands[b].Carrier.CarrierName;
 								
-							console.log('phone.Band', phone.Band);
-							console.log('we have a match', sphoneGSM[a], sbands[b]);
+							//console.log('phone.Band', phone.Band);
+							//console.log('we have a match', sphoneGSM[a], sbands[b]);
 								
 							break;
 							

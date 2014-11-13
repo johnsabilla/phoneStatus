@@ -13,17 +13,17 @@ var mongoose = require('mongoose'),
  *  create function
  */
 exports.create = function(req, res) {
-	var Band = new Band(req.body);
+	var band = new Band(req.body);
 	//Band.user = req.user;
-	Band.carrier = req.carrier;
+	//Band.carrier = req.carrier;
 
-	Band.save(function(err) {
+	band.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(Band);
+			res.jsonp(band);
 		}
 	});
 };
@@ -100,7 +100,7 @@ exports.delete = function(req, res) {
  * look for a band by id
  */
 exports.bandByID = function(req, res, next, id) { 
-	Band.findById(id).populate('user', 'displayName').exec(function(err, band) {
+	Band.findById(id).exec(function(err, band) {
 		if (err) return next(err);
 		if (!band) return next(new Error('Failed to load band ' + id));
 		req.band = band;

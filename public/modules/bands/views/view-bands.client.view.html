@@ -1,0 +1,26 @@
+<section data-ng-controller="BandsController" data-ng-init="findOne()">
+	<div class="page-header">
+<!-- 		<h1 data-ng-bind=".name"></h1> -->
+	</div>
+	<div class="pull-right" >
+		<a class="btn btn-primary" href="/#!/bands/{{band._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			<br/>
+			Frequency:
+			<span> {{band.Frequency}}Mhz </span>
+			<br/>
+			Band: 
+			<span data-ng-bind="band.Band"></span>
+			<br/>
+			Protocol:
+			<span data-ng-bind="band.Protocol"> {{gsmband}}Ghz </span>
+			<br/>
+		</em>
+	</small>
