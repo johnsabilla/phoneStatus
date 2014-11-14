@@ -1,0 +1,26 @@
+<section data-ng-controller="CarriersController" data-ng-init="findOne()">
+	<div class="page-header">
+<!-- 		<h1 data-ng-bind=".name"></h1> -->
+	</div>
+	<div class="pull-right" >
+		<a class="btn btn-primary" href="/#!/carriers/{{carrier._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<small>
+		<em class="text-muted">
+			<br/>
+			CarrierName:
+			<span> {{carrier.CarrierName}} </span>
+			<br/>
+			Country: 
+			<span data-ng-bind="carrier.Country"></span>
+			<br/>
+			Bands:
+			<span data-ng-bind="carrier.Bands"></span>
+			<br/>
+		</em>
+	</small>

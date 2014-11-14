@@ -1,0 +1,18 @@
+<section data-ng-controller="CarriersController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Carriers</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="carrier in carriers" data-ng-href="#!/carriers/{{carrier._id}}" class="list-group-item">
+			CountryName:
+			<h4 class="list-group-item-heading" >{{carrier.CountryName}}Mhz</h4>
+			Country:
+			<h4 class="list-group-item-heading" data-ng-bind="carrier.Country"></h4>
+			Bands:
+			<h4 class="list-group-item-heading" data-ng-bind="carrier.Bands"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!carriers.$resolved || carriers.length">
+    	No carriers yet, why don't you <a href="/#!/carriers/create">create one</a>?
+    </div>
+</section>

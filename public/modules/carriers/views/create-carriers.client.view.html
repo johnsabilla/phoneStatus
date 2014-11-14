@@ -1,0 +1,33 @@
+<section data-ng-controller="CarriersController">
+	<div class="page-header">
+		<h1>New Carrier</h1>
+	</div>
+	<div class="col-md-12">
+		<form name="carrierForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+			<fieldset>
+				<div class="form-group" ng-class="{ 'has-error': carrierForm.name.dirty && carrierForm.name.$invalid }">		
+					<label class="control-label" for="CarrierName">CarrierName</label>
+					<div class="controls">
+					<input name="CarrierName" type="text" data-ng-model="CarrierName" id="CarrierName" class="form-control" placeholder="CarrierName" required>
+					</div>
+					
+					<label class="control-label" for="Country">Country</label>
+					<div class="controls">
+					<input name="Country" type="text" data-ng-model="Country" id="Country" class="form-control" placeholder="Country" required>
+					</div>
+					
+					<label class="control-label" for="Bands">Bands</label>
+					<div class="controls">
+					<input name="Bands" type="text" data-ng-model="Bands" id="Bands" class="form-control" placeholder="Bands" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>
