@@ -7,6 +7,8 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Carrier = mongoose.model('Carrier'),
+	Band = mongoose.model('Band'),
+	async = require('async'),
 	_ = require('lodash');
 
 
@@ -14,17 +16,17 @@ var mongoose = require('mongoose'),
  *  create function
  */
 exports.create = function(req, res) {
-	var Carrier = new Carrier(req.body);
+	var carrier = new Carrier(req.body);
 	//Band.user = req.user;
 	//Carrier.phone = req.phone;
-
-	Carrier.save(function(err) {
+	console.log(carrier);
+	carrier.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(Carrier);
+			res.jsonp(carrier);
 		}
 	});
 };
@@ -64,7 +66,7 @@ exports.read = function(req, res) {
 /**
  *  read function (show all of the carrier)
  */
-exports.list = function(req, res) { Carrier.find().sort('-created').populate('user', 'displayName').exec(function(err, Carrier) {
+exports.list = function(req, res) { Carrier.find().exec(function(err, Carrier) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -101,11 +103,26 @@ exports.delete = function(req, res) {
  * look for a carrier by id
  */
 exports.carrierByID = function(req, res, next, id) { 
-	Carrier.findById(id).populate('user', 'displayName').exec(function(err, carrier) {
+	Carrier.findById(id).exec(function(err, carrier) {
 		if (err) return next(err);
 		if (!carrier) return next(new Error('Failed to load carrier ' + id));
 		req.carrier = carrier;
 		next();
+	});
+};
+
+/*
+ *
+ */
+ exports.listAllBands = function(req, res) {
+  	Band.find().exec(function(err, Band) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(Band);
+		}
 	});
 };
 

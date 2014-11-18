@@ -30,10 +30,38 @@ var CarrierSchema = new Schema({
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available Country']
 	},
-	Bands: {
+	GSM: {
+		type: Number,
+		trim: true,
+		default: 0,
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available bands ']
+	},
+	LTE: {
+		type: Number,
+		trim: true,
+		default: 0,
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available bands ']
+	},
+	UMTS: {
+		type: Number,
+		trim: true,
+		default: 0,
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available bands ']
+	},
+	CDMA: {
+		type: Number,
+		trim: true,
+		default: 0,
+		required: true,
+		validate: [validateLocalStrategyProperty,'Please fill in the available bands ']
+	}
+/*	Bands: {
 		type: [Schema.ObjectId],
 		ref: 'Band'
-	} 
+	} */
 });
 
 mongoose.model('Carrier', CarrierSchema);

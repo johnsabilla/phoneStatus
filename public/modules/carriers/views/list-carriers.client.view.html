@@ -5,11 +5,17 @@
     <div class="list-group">
         <a data-ng-repeat="carrier in carriers" data-ng-href="#!/carriers/{{carrier._id}}" class="list-group-item">
 			CountryName:
-			<h4 class="list-group-item-heading" >{{carrier.CountryName}}Mhz</h4>
+			<h4 class="list-group-item-heading" data-ng-bind="carrier.CarrierName"></h4>
 			Country:
 			<h4 class="list-group-item-heading" data-ng-bind="carrier.Country"></h4>
-			Bands:
-			<h4 class="list-group-item-heading" data-ng-bind="carrier.Bands"></h4>
+			GSM:
+			<h4 class="list-group-item-heading" data-ng-bind="carrier.GSM"></h4>
+            LTE:
+            <h4 class="list-group-item-heading" data-ng-bind="carrier.LTE"></h4>
+            UMTS:
+            <h4 class="list-group-item-heading" data-ng-bind="carrier.UMTS"></h4>
+            CDMA:
+            <h4 class="list-group-item-heading" data-ng-bind="carrier.CDMA"></h4>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!carriers.$resolved || carriers.length">

@@ -6,20 +6,21 @@
 		<form name="carrierForm" class="form-horizontal" data-ng-submit="create()" novalidate>
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': carrierForm.name.dirty && carrierForm.name.$invalid }">		
-					<label class="control-label" for="CarrierName">CarrierName</label>
+					<label class="control-label" for="carriername">CarrierName</label>
 					<div class="controls">
-					<input name="CarrierName" type="text" data-ng-model="CarrierName" id="CarrierName" class="form-control" placeholder="CarrierName" required>
+					<input name="carriername" type="text" data-ng-model="carriername" id="carriername" class="form-control" placeholder="CarrierName" required>
 					</div>
 					
-					<label class="control-label" for="Country">Country</label>
+					<label class="control-label" for="country">Country</label>
 					<div class="controls">
-					<input name="Country" type="text" data-ng-model="Country" id="Country" class="form-control" placeholder="Country" required>
+					<input name="country" type="text" data-ng-model="country" id="country" class="form-control" placeholder="Country" required>
 					</div>
 					
-					<label class="control-label" for="Bands">Bands</label>
+					<label class="control-label" for="bands">Bands</label>
 					<div class="controls">
-					<input name="Bands" type="text" data-ng-model="Bands" id="Bands" class="form-control" placeholder="Bands" required>
+					<input name="bands" type="text" data-ng-model="bands" id="bands" class="form-control" placeholder="Bands" required>
 					</div>
+
 				</div>
 				<div class="form-group">
 					<input type="submit" class="btn btn-default">

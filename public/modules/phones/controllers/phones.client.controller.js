@@ -11,18 +11,18 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 			// Create new phone object
 			var phone = new Phones ({
 				Name: this.name,
-				GSMBands: [],
-				LTEFDDBands: [],
+				GSMBands: this.gsmbands,
+				LTEFDDBands: this.ltefddbands,
 				ModelNumber: this.modelnumber,
-				UMTSBands: [],
-				TDSCDMABands: []
+				UMTSBands: this.umtsbands,
+				TDSCDMABands: this.tdscdmabands
 			});
 			
 			// Convert comma separated string to array of strings and add to phone
-			phone.GSMBands.push.apply(phone.GSMBands, this.gsmbands.split(','));
+/*			phone.GSMBands.push.apply(phone.GSMBands, this.gsmbands.split(','));
 			phone.LTEFDDBands.push.apply(phone.LTEFDDBands, this.ltefddbands.split(','));
 			phone.UMTSBands.push.apply(phone.UMTSBands, this.umtsbands.split(','));
-			phone.TDSCDMABands.push.apply(phone.TDSCDMABands, this.tdscdmabands.split(','));
+			phone.TDSCDMABands.push.apply(phone.TDSCDMABands, this.tdscdmabands.split(','));*/
 
 			// Redirect after save
 			phone.$save(function(response) {
@@ -61,10 +61,6 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 		$scope.update = function() {
 
 			//Make sure that we re-insert the string as an array of strings
-			$scope.phone.GSMBands = $scope.phone.GSMBands.split(',');
-			$scope.phone.UMTSBands = $scope.phone.UMTSBands.split(',');
-			$scope.phone.LTEFDDBands = $scope.phone.LTEFDDBands.split(',');
-			$scope.phone.TDSCDMABands = $scope.phone.TDSCDMABands.split(',');
 			var phone = $scope.phone;
 
 			phone.$update(function() {

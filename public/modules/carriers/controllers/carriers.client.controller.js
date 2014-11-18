@@ -5,31 +5,31 @@ angular.module('carriers').controller('CarriersController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Carriers) {
 		$scope.authentication = Authentication;
 
-		// Create new carrier
 		$scope.create = function() {
 
-			// Create new carrier object
+			// Create new phone object
 			var carrier = new Carriers ({
-				CarrierName: this.CarrierName,
-				Country: this.Country,
-				Bands: this.Bands
+				CarrierName: this.carriername,
+				Country: this.country,
+				Bands: []
 			});
 			
-			carrier.Bands.push.apply(carrier.Bands, this.Bands.split(','));
+			// Convert comma separated string to array of strings and add to phone
+			carrier.Bands.push.apply(carrier.Bands, this.bands.split(','));
 
 			// Redirect after save
 			carrier.$save(function(response) {
 				$location.path('carriers/' + response._id);
 
 				// Clear form fields
-				$scope.CarrierName = 0;
-				$scope.Country = '';
-				$scope.Bands = 0;
-				
+				$scope.carriername = '';
+				$scope.country= '';
+				$scope.Bands= '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
+
 
 		// Delete a carrier
 		$scope.remove = function(carrier) {
@@ -42,7 +42,7 @@ angular.module('carriers').controller('CarriersController', ['$scope', '$statePa
 					}
 				}
 			} else {
-				$scope.band.$remove(function() {
+				$scope.carrier.$remove(function() {
 					$location.path('carriers');
 				});
 			}
@@ -68,14 +68,6 @@ angular.module('carriers').controller('CarriersController', ['$scope', '$statePa
 
 		// Find existing carriers
 		$scope.findOne = function() {
-			$scope.carrier = Carriers.get({ 
-				carrierId: $stateParams.carrierId
-			});
-
-		};
-
-		// Find existing carrier
-		$scope.checkBand = function() {
 			$scope.carrier = Carriers.get({ 
 				carrierId: $stateParams.carrierId
 			});

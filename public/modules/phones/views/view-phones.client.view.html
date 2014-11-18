@@ -2,7 +2,7 @@
 	<div class="page-header">
 		<h1 data-ng-bind="phone.name"></h1>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == phone.user._id">
+	<div class="pull-right">
 		<a class="btn btn-primary" href="/#!/phones/{{phone._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
@@ -20,18 +20,17 @@
 			<span data-ng-bind="phone.ModelNumber"></span>
 			<br/>
 			gsm bands:
-			<span data-ng-repeat="gsmband in phone.GSMBands"> {{gsmband}}Ghz </span>
+			<span data-ng-bind="phone.GSMBands"></span>
 			<br/>
 			umts bands:
-			<span data-ng-repeat="umtsband in phone.UMTSBands"> {{umtsband}}Ghz </span>
+			<span data-ng-bind="phone.UMTSBands"></span>
 			<br/>
 			ltefdd bands:
-			<span data-ng-repeat="ltefddband in phone.LTEFDDBands"> {{ltefddband}}Ghz </span>
+			<span data-ng-bind="phone.LTEFDDBands"></span>
 			<br/>
 			td-scdma bands:
-			<span data-ng-repeat="tdscdmaband in phone.TDSCDMABands"> {{tdscdmaband}}Ghz </span>
+			<span data-ng-bind="phone.TDSCDMABands"></span>
 			<br/>
-			 works in 'murica?: <span data-ng-bind="phone.Band"></span> 
 		</em>
 	</small>
 

@@ -26,14 +26,14 @@ var validateLocalStrategyPassword = function(password) {
 
 var PhoneSchema = new Schema({
 	GSMBands: {
-		type:[Number],
+		type: Number,
 		trim: true,
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available GSMBands for this phone']
 	},
 	LTEFDDBands: {
-		type:[Number],
+		type: Number,
 		trim: true,
 		default: '',
 		required: true,
@@ -54,24 +54,25 @@ var PhoneSchema = new Schema({
 		validate: [validateLocalStrategyProperty,'Please fill in the Name of this phone']
 	},
 	UMTSBands:{
-		type:[Number],
+		type: Number,
 		trim: false,
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available UMTSBands for this phone']
 	},
 	TDSCDMABands: {
-		type:[Number],
+		type: Number,
 		trim: false,
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available TD-SCDMABands for this phone']
-	},
+	}
+	/*,
 	Carrier: {
 		type: Schema.ObjectId,
 		ref: 'User'
 	}
-	/*	Band: {
+		Band: {
 		type: String,
 		trim: false,
 		default: ''

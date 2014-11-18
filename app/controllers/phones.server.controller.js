@@ -48,7 +48,7 @@ exports.read = function(req, res) {
 /**
  * Show list phones
  */
-exports.list = function(req, res) { Phone.find().sort('-created').populate('user', 'displayName').exec(function(err, Phone) {
+exports.list = function(req, res) { Phone.find().exec(function(err, Phone) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -103,7 +103,7 @@ exports.delete = function(req, res) {
  *			 We also compare if any of the supported bands
  *			 are supported by a specific carrier. 
  */
-exports.phoneByID = function(req, res, next, id) { 
+exports.phoneByIDback = function(req, res, next, id) { 
 
 		/*
 		 *  used async parallel to query multiple models in database and keep everything asynchronous
@@ -196,13 +196,11 @@ exports.phoneByID = function(req, res, next, id) {
 				next();
 			});
 
-
-		
 };
 
 
-/*exports.phoneByID = function(req, res, next, id) { 
-	Phone.findById(id).populate('user', 'displayName').exec(function(err, phone) {
+exports.phoneByID = function(req, res, next, id) { 
+	Phone.findById(id).exec(function(err, phone) {
 		if (err) return next(err);
 		if (!phone) return next(new Error('Failed to load Phone ' + id));
 		
@@ -211,7 +209,7 @@ exports.phoneByID = function(req, res, next, id) {
 		next();
 	});
 };
-*/
+
 
 
 
@@ -222,9 +220,9 @@ exports.phoneByID = function(req, res, next, id) {
 /**
  * phone authorization middleware
  */
-exports.hasAuthorization = function(req, res, next) {
+/*exports.hasAuthorization = function(req, res, next) {
 	if (req.phone.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
-};
+};*/
