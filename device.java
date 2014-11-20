@@ -6,6 +6,7 @@ public class device
 	String GSMBands;
 	String LTEBands;
 	String UMTSBands;
+	String CDMABands;
 	
 	public device() 
 	{

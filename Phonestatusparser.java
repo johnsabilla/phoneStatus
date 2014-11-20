@@ -1,16 +1,144 @@
 import java.io.*;
 
-
+//Project Stark File Parser
 public class Phonestatusparser 
 {
 
-	public Phonestatusparser() {
+	public Phonestatusparser() 
+	{
 		// TODO Auto-generated constructor stub
 	}
 
+	public static int ParseGSM(String line)
+	{
+		int band;
+		int comma = -1;
+		int length = -1;
+		
+		int GSM850 = 1;
+		int	GSM900 = 2;
+		int GSM1800 = 4;
+		int GSM1900 = 8;
+		
+		int GSMSupport = 0;
+		
+		line = line.replaceAll("\\s", "");
+		length = line.length();
+		comma = line.indexOf(",");
+		
+		while(line.length() > 0 )
+		{
+			if(comma != -1)
+			{
+				band = Integer.parseInt(line.substring(0, comma));
+			}
+			else
+			{
+				band = Integer.parseInt(line.substring(0, line.length()));
+				line = ""; //last line break
+			}
+			line = line.substring(comma + 1, line.length());
+			comma = line.indexOf(",");
+			
+			switch(band)
+			{
+				case 850:
+					GSMSupport = GSMSupport | GSM850;
+					break;
+				
+				case 900:
+					GSMSupport = GSMSupport | GSM900;
+					break;
+				
+				case 1800:
+					GSMSupport = GSMSupport | GSM1800;
+					break;
+				
+				case 1900:
+					GSMSupport = GSMSupport | GSM1900;
+					break;
+					
+				default:
+					break;
+			}
+		}
+		
+		return GSMSupport;
+	}
+	
+	public static int ParseNonGSM(String line, String bandflag)
+	{
+		int support = 0;
+		int comma = -1;
+		int band = 0;
+		
+		line = line.replaceAll("\\s", "");
+		comma = line.indexOf(",");
+		String temp;
+		
+		while(line.length() > 0 )
+		{
+			if(comma != -1)
+			{
+				temp = line.substring(0, comma);
+				temp = temp.replace(bandflag, "");
+				band = Integer.parseInt(temp);
+				support = support | (1 << band);
+			}
+			else
+			{
+				temp = line;
+				temp = temp.replace(bandflag, "");
+				band = Integer.parseInt(temp);
+				support = support | (1 << band);
+				line = ""; //last line break
+			}
+			line = line.substring(comma + 1, line.length());
+			comma = line.indexOf(",");
+		}
+		
+		return support;
+	}
+	
+	public static int ParseLTE(String line)
+	{
+		int LTESupport = 0;
+		int comma = -1;
+		
+		int band = 0;
+		
+		line = line.replaceAll("\\s", "");
+		comma = line.indexOf(",");
+		String temp;
+		
+		while(line.length() > 0 )
+		{
+			if(comma != -1)
+			{
+				temp = line.substring(0, comma);
+				temp = temp.replace("LTEB", "");
+				band = Integer.parseInt(temp);
+				LTESupport = LTESupport | (1 << band);
+			}
+			else
+			{
+				temp = line;
+				temp = temp.replace("LTEB", "");
+				band = Integer.parseInt(temp);
+				LTESupport = LTESupport | (1 << band);
+				line = ""; //last line break
+			}
+			line = line.substring(comma + 1, line.length());
+			comma = line.indexOf(",");
+		}
+		
+		return LTESupport;
+	}
+	
 	public static void main(String[] args) throws IOException 
 	{
 		int equals = 0;
+		int support = 0;
 		
 		File read_file = new File(args[0]);
 		File write_file = new File("script");
@@ -41,21 +169,35 @@ public class Phonestatusparser
 			}
 			else if(text.contains("GSMBands="))
 			{
+				support = 0;
 				equals = text.indexOf("=");
-				phone.GSMBands = "\"" + "GSMBands" + "\":"  + "["  + text.substring(equals + 1) +  "],";
+				support = ParseGSM(text.substring(equals + 1));
+				phone.GSMBands = "\"" + "GSMBands" + "\":"  +   support + ",";
 				//System.out.println(phone.GSMBands);
 			}
 			else if(text.contains("UMTS="))
 			{
+				support = 0;
 				equals = text.indexOf("=");
-				phone.UMTSBands = "\"" + "UMTSBands" + "\": " + "["  + text.substring(equals + 1) +  "]";
+				support = ParseNonGSM(text.substring(equals + 1), "UMTSB");
+				phone.UMTSBands = "\"" + "UMTSBands" + "\":"  + support + ",";
 				//System.out.println(phone.UMTSBands);
 			}
 			else if(text.contains("LTE="))
 			{
+				support = 0;
 				equals = text.indexOf("=");
-				phone.LTEBands = "\"" + "LTEBands" + "\": " + "["  + text.substring(equals + 1) +  "],";
-				//System.out.println(phone.LTEBands);
+				support = ParseNonGSM(text.substring(equals + 1), "LTEB");
+				phone.LTEBands = "\"" + "LTEBands" + "\": " + support +  ",";
+				System.out.println(phone.LTEBands);
+			}
+			else if(text.contains("CDMA="))
+			{
+				support = 0;
+				equals = text.indexOf("=");
+				support = ParseNonGSM(text.substring(equals + 1), "CDMABC");
+				phone.CDMABands = "\"" + "CDMABands" + "\": " + support;
+				System.out.println(phone.CDMABands);
 			}
 			else if(text.contains("END"))
 			{
@@ -65,6 +207,7 @@ public class Phonestatusparser
 								phone.model +
 								phone.make +
 								phone.UMTSBands +
+								phone.CDMABands +
 								"});" +"\n";
 				
 				System.out.println(insertcmd);
