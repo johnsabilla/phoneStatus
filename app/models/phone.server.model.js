@@ -66,8 +66,13 @@ var PhoneSchema = new Schema({
 		default: '',
 		required: true,
 		validate: [validateLocalStrategyProperty,'Please fill in the available TD-SCDMABands for this phone']
+	},
+	Support: {
+		type: String,
+		trim: false,
+		default: 'no'
 	}
-	/*,
+	/*
 	Carrier: {
 		type: Schema.ObjectId,
 		ref: 'User'

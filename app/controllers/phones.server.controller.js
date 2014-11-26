@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Phone = mongoose.model('Phone'),
 	Band = mongoose.model('Band'),
+	Carrier = mongoose.model('Carrier'),
 	async = require('async'),
 	_ = require('lodash');
 
@@ -198,8 +199,64 @@ exports.phoneByIDback = function(req, res, next, id) {
 
 };
 
+exports.phoneByID = function(req, res, next, id){
 
-exports.phoneByID = function(req, res, next, id) { 
+	async.parallel([
+		function(callback) {
+			Phone.findById(id).exec(function(err, phone) {
+				if(err)
+					return next(err);
+				if(!phone)
+					return next(new Error('Failed to load Phone' + id));
+
+					req.phone = phone;
+
+					callback(null,phone);
+
+				});
+			},
+		function(callback) {
+			Carrier.find().exec(function(err, carrier) {
+				if(err)
+					return next(err);
+				if(!carrier)
+					return next(new Error('No Carrier could be found'));
+
+					callback(null, carrier);
+				});
+		}],
+		function(err,res) {
+			if(err) {
+				console.log(err);
+				return res.status(400).send('error occured');
+			}
+			if(res === null || res[0] === null || res[1] === null) {
+				return res.status(400).send('objects are null');
+			}
+			console.log('Phone: ', res[0]);
+			console.log('Carrier: ', res[1]);
+
+			console.log('Phone.GSMBands ', res[0].GSMBands.toString(2));
+			console.log('Carrier.GSM ', res[1][0].GSM.toString(2));
+
+			var phoneGSM = res[0].GSMBands;
+			var carrierGSM = res[1][0].GSM;
+			var output = (phoneGSM & carrierGSM).toString(2);
+			console.log('AND OP', output);
+
+			for(var i = 0; i < output.length; i++) {
+				if(output[i] && i === 0)
+					console.log('bit ' + i + ' is 1: 850' );
+				if(output[i] && i === 3)
+					console.log('bit ' + i + ' is 1: 1900' );
+			}
+
+			next();
+		});
+
+};
+
+/*exports.phoneByID = function(req, res, next, id) { 
 	Phone.findById(id).exec(function(err, phone) {
 		if (err) return next(err);
 		if (!phone) return next(new Error('Failed to load Phone ' + id));
@@ -209,7 +266,7 @@ exports.phoneByID = function(req, res, next, id) {
 		next();
 	});
 };
-
+*/
 
 
 
