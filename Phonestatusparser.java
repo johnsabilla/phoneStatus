@@ -260,7 +260,7 @@ public class Phonestatusparser
 			if(text.contains("Model="))
 			{
 				equals = text.indexOf("=");
-				phone.model = "ModelNumber:" + "\'" + text.substring(equals + 1, text.length() - 1) + "\',";
+				phone.model = "ModelNumber:" + "\'" + text.substring(equals + 1, text.length()) + "\',";
 				//System.out.println(phone.model);
 			}
 			else if(text.contains("GSMBands="))
