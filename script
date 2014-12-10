@@ -1,7 +1,7 @@
-db.phones.insert({"GSMBands":[900, 1800, 1900],"LTEBands": [LTEB12100, LTEB5850, LTEB31800, LTEB72600, LTEB8900, LTEB20800],"ModelNumber": "SM-G900","Name": "Galaxy S5","UMTSBands": [UMTS850B5, UMTS900B8, UMTS900B2, UMTS2100B1]});
-db.phones.insert({"GSMBands":[900, 1800, 1900],"LTEBands": [LTEB12100, LTEB5850, LTEB31800, LTEB72600, LTEB8900, LTEB20800],"ModelNumber": "SM-G900","Name": "Galaxy S5","UMTSBands": [UMTS850B5, UMTS900B8, UMTS900B2, UMTS2100B1]});
-db.phones.insert({"GSMBands":[850, 900, 1800, 1900],"LTEBands": [LTEB5850, LTEB21900, LTEB25 1900, LTEB700B12],"ModelNumber": "SM-G900R","Name": "Galaxy S5","UMTSBands": [UMTS850B5, UMTS900B8, UMTS900B2, UMTS2100B1]});
-db.phones.insert({"GSMBands":[850, 900, 800, 1900],"LTEBands": [LTEB12100, LTEB17700, LTEB5850, LTEB41700/2100, LTEB31800, LTEB72600, LTEB21900, LTEB8900],"ModelNumber": "SM-G900","Name": "Galaxy S5","UMTSBands": [UMTS850 B5, UMTS1700/2100B4, UMTS1900B2, UMTS2100B1]});
-db.phones.insert({"GSMBands":[850, 900, 800, 1900],"LTEBands": [LTEB13700, LTEB41700/2100],"ModelNumber": "SM-G900","Name": "Galaxy S5","UMTSBands": [UMTS850B5, UMTS900B8, UMTS900B2, UMTS2100B1]});
-db.phones.insert({"GSMBands":[850, 900, 1800, 1900],"LTEBands": [LTEB17700, LTEB5850, LTEB41700/2100, LTEB31800, LTEB72600, LTEB21900],"ModelNumber": "SM-G900W","Name": "Galaxy S5","UMTSBands": [UMTS850B5, UMTS900B8, UMTS1700/2100B4, UMTS1900B2, UMTS2100B1]});
-db.phones.insert({"GSMBands":[850, 900, 1800, 1900],"LTEBands": [LTEB12100, LTEB5850, LTEB31800, LTEB72600, LTEB8900, LTEB20800],"ModelNumber": "SM-G900F","Name": "Galaxy S5","UMTSBands": [UMTS850B5, UMTS900B8, UMTS1900B2, UMTS2100B1]});
+db.phones.insert({GSMBands:14,LTEBands:1049002,ModelNumber:'SM-G900',Name:'Galaxy S5',UMTSBands:294,Support:'no'});
+db.phones.insert({GSMBands:14,LTEBands:1049002,ModelNumber:'SM-G900',Name:'Galaxy S5',UMTSBands:294,Support:'no'});
+db.phones.insert({GSMBands:15,LTEBands:33558564,ModelNumber:'SM-G900R',Name:'Galaxy S5',UMTSBands:294,CDMABands:16385,Support:'no'});
+db.phones.insert({GSMBands:11,LTEBands:131518,ModelNumber:'SM-G900',Name:'Galaxy S5',UMTSBands:54,CDMABands:16385,Support:'no'});
+db.phones.insert({GSMBands:11,LTEBands:8208,ModelNumber:'SM-G900',Name:'Galaxy S5',UMTSBands:294,CDMABands:16385,Support:'no'});
+db.phones.insert({GSMBands:15,LTEBands:131260,ModelNumber:'SM-G900W',Name:'Galaxy S5',UMTSBands:310,CDMABands:16385,Support:'no'});
+db.phones.insert({GSMBands:15,LTEBands:1049002,ModelNumber:'SM-G900F',Name:'Galaxy S5',UMTSBands:294,CDMABands:16385,Support:'no'});

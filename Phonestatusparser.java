@@ -158,13 +158,13 @@ public class Phonestatusparser
 			if(text.contains("Make="))
 			{
 				equals = text.indexOf("=");
-				phone.make = "\"" + "Name" + "\": " + "\"" + text.substring(equals + 1, text.length() - 1) + "\",";
+				phone.make = "Name:" + "\'" + text.substring(equals + 1, text.length() - 1) + "\',";
 				//System.out.println(phone.make);
 			}
 			if(text.contains("Model="))
 			{
 				equals = text.indexOf("=");
-				phone.model = "\"" + "ModelNumber" + "\": " + "\"" + text.substring(equals + 1, text.length() - 1) + "\",";
+				phone.model = "ModelNumber:" + "\'" + text.substring(equals + 1, text.length() - 1) + "\',";
 				//System.out.println(phone.model);
 			}
 			else if(text.contains("GSMBands="))
@@ -172,7 +172,7 @@ public class Phonestatusparser
 				support = 0;
 				equals = text.indexOf("=");
 				support = ParseGSM(text.substring(equals + 1));
-				phone.GSMBands = "\"" + "GSMBands" + "\":"  +   support + ",";
+				phone.GSMBands = "GSMBands:"  +   support + ",";
 				//System.out.println(phone.GSMBands);
 			}
 			else if(text.contains("UMTS="))
@@ -180,7 +180,7 @@ public class Phonestatusparser
 				support = 0;
 				equals = text.indexOf("=");
 				support = ParseNonGSM(text.substring(equals + 1), "UMTSB");
-				phone.UMTSBands = "\"" + "UMTSBands" + "\":"  + support + ",";
+				phone.UMTSBands = "UMTSBands:"  + support + ",";
 				//System.out.println(phone.UMTSBands);
 			}
 			else if(text.contains("LTE="))
@@ -188,26 +188,31 @@ public class Phonestatusparser
 				support = 0;
 				equals = text.indexOf("=");
 				support = ParseNonGSM(text.substring(equals + 1), "LTEB");
-				phone.LTEBands = "\"" + "LTEBands" + "\": " + support +  ",";
-				System.out.println(phone.LTEBands);
+				phone.LTEBands = "LTEBands:" + support +  ",";
+				//System.out.println(phone.LTEBands);
 			}
 			else if(text.contains("CDMA="))
 			{
 				support = 0;
 				equals = text.indexOf("=");
 				support = ParseNonGSM(text.substring(equals + 1), "CDMABC");
-				phone.CDMABands = "\"" + "CDMABands" + "\": " + support;
-				System.out.println(phone.CDMABands);
+				phone.CDMABands = "CDMABands:" + support + ",";
+				//System.out.println(phone.CDMABands);
 			}
 			else if(text.contains("END"))
 			{
+				if(phone.GSMBands == null)
+				{
+					phone.GSMBands = "";
+				}
 				insertcmd = "db.phones.insert({" + 
-								phone.GSMBands + 
-								phone.LTEBands + 
+								( (phone.GSMBands == null) ? "" : phone.GSMBands ) + 
+								( (phone.LTEBands == null) ? "" : phone.LTEBands ) + 
 								phone.model +
 								phone.make +
-								phone.UMTSBands +
-								phone.CDMABands +
+								( (phone.UMTSBands == null) ? "" : phone.UMTSBands ) +
+								( (phone.CDMABands == null) ? "" : phone.CDMABands ) +
+								"Support:'no'" +
 								"});" +"\n";
 				
 				System.out.println(insertcmd);
@@ -216,5 +221,4 @@ public class Phonestatusparser
 		}
 		writer.close();
 	}
-
 }
