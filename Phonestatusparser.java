@@ -100,6 +100,102 @@ public class Phonestatusparser
 		return support;
 	}
 	
+	public static int ParseTDSCDMA(String line, String string)
+	{
+		int band;
+		int comma = -1;
+		int length = -1;
+		
+		int TDSCDMA1900 = 1;
+		int	TDSCDMA2000 = 2;
+		int TDSCDMA2600 = 4;
+		int TDSCDMA1901 = 8;	//Actually for TDSCDMA1900+
+		int TDSCDMA2300 = 16;
+		
+		int TDSCDMASupport = 0;
+		
+		line = line.replaceAll("\\s", "");
+		length = line.length();
+		comma = line.indexOf(",");
+		
+		while(line.length() > 0 )
+		{
+			if(comma != -1)
+			{
+				band = Integer.parseInt(line.substring(7, comma));
+			}
+			else
+			{
+				band = Integer.parseInt(line.substring(7, line.length()));
+				line = ""; //last line break
+			}
+			line = line.substring(comma + 1, line.length());
+			comma = line.indexOf(",");
+			
+			switch(band)
+			{
+				case 1900:
+					TDSCDMASupport = TDSCDMASupport | TDSCDMA1900;
+					break;
+				
+				case 2000:
+					TDSCDMASupport = TDSCDMASupport | TDSCDMA2000;
+					break;
+				
+				case 2600:
+					TDSCDMASupport = TDSCDMASupport | TDSCDMA2600;
+					break;
+
+				case 1901:
+					TDSCDMASupport = TDSCDMASupport | TDSCDMA1901;
+					break;
+					
+				case 2300:
+					TDSCDMASupport = TDSCDMASupport | TDSCDMA2300;
+					break;
+					
+				default:
+					break;
+			}
+		}
+		
+		return TDSCDMASupport;
+	}
+	
+	public static int ParseCDMA(String line, String bandflag)
+	{
+		int support = 0;
+		int comma = -1;
+		int band = 0;
+		
+		line = line.replaceAll("\\s", "");
+		comma = line.indexOf(",");
+		String temp;
+		
+		while(line.length() > 0 )
+		{
+			if(comma != -1)
+			{
+				temp = line.substring(0, comma);
+				temp = temp.replace(bandflag, "");
+				band = Integer.parseInt(temp);
+				support = support | (1 << band);
+			}
+			else
+			{
+				temp = line;
+				temp = temp.replace(bandflag, "");
+				band = Integer.parseInt(temp);
+				support = support | (1 << band);
+				line = ""; //last line break
+			}
+			line = line.substring(comma + 1, line.length());
+			comma = line.indexOf(",");
+		}
+		
+		return support;
+	}
+	
 	public static int ParseLTE(String line)
 	{
 		int LTESupport = 0;
@@ -191,6 +287,14 @@ public class Phonestatusparser
 				phone.LTEBands = "LTEBands:" + support +  ",";
 				//System.out.println(phone.LTEBands);
 			}
+			else if(text.contains("TDSCDMA="))
+			{
+				support = 0;
+				equals = text.indexOf("=");
+				support = ParseTDSCDMA(text.substring(equals + 1), "TDSCDMA");
+				phone.TDSCDMABands = "TDSCDMABands:" + support + ",";
+				//System.out.println(phone.CDMABands);
+			}
 			else if(text.contains("CDMA="))
 			{
 				support = 0;
@@ -212,6 +316,7 @@ public class Phonestatusparser
 								phone.make +
 								( (phone.UMTSBands == null) ? "" : phone.UMTSBands ) +
 								( (phone.CDMABands == null) ? "" : phone.CDMABands ) +
+								( (phone.TDSCDMABands == null) ? "" : phone.TDSCDMABands ) +
 								"Support:'no'" +
 								"});" +"\n";
 				

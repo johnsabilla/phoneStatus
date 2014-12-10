@@ -7,6 +7,7 @@ public class device
 	String LTEBands;
 	String UMTSBands;
 	String CDMABands;
+	String TDSCDMABands;
 	String Support;
 	
 	public device() 
