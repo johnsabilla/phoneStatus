@@ -20,9 +20,8 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var phone = new Phone(req.body);
-	phone.user = req.user;
-
-	console.log('useid', phone.user);
+	//phone.user = req.user;
+	//console.log('useid', phone.user);
 
 	phone.save(function(err) {
 		if (err) {
@@ -104,13 +103,9 @@ exports.delete = function(req, res) {
  *			 We also compare if any of the supported bands
  *			 are supported by a specific carrier. 
  */
-exports.phoneByIDback = function(req, res, next, id) { 
+/*exports.phoneByIDback = function(req, res, next, id) { 
 
-		/*
-		 *  used async parallel to query multiple models in database and keep everything asynchronous
-		 *  since mongodb is synchronous. 
-		 */
-		async.parallel([
+			async.parallel([
 
 			function(callback) {
 				Phone.findById(id).exec(function(err, phone) {
@@ -135,10 +130,6 @@ exports.phoneByIDback = function(req, res, next, id) {
 
 			],
 
-			/*
-			 * using the result sets that we grabbed from phone and bands, check if the
-			 * phone is supported
-			 */
 			function(err,res) {
 				if(err){
 					console.log(err);
@@ -197,7 +188,31 @@ exports.phoneByIDback = function(req, res, next, id) {
 				next();
 			});
 
-};
+};*/
+
+function checkGSM(phoneGSM, carrierGSM){
+
+	console.log('phoneGSM ', phoneGSM, ' CarrierGSM ', carrierGSM);
+
+	var gsmBand = [1900, 1800, 900, 850, 0];
+	var output  = null;
+	var carriers = [];
+	carrierGSM.forEach(function(carrier){
+
+		//console.log('carrier GSM :', carrier.GSM);
+		output = (phoneGSM & carrier.GSM).toString(2);
+		//console.log('output is:', output);
+
+		if(output !== 0)
+			carriers.push(carrier.CarrierName);
+		for(var i = 0; i < output.length; i++) {
+			if(output[i] === 1)
+				console.log('a bit ' + i + ' is 1: ' + gsmBand[i]);
+		}
+	});
+	  
+	return carriers;
+}
 
 exports.phoneByID = function(req, res, next, id){
 
@@ -232,29 +247,40 @@ exports.phoneByID = function(req, res, next, id){
 			}
 			if(res === null || res[0] === null || res[1] === null) {
 				return res.status(400).send('objects are null');
+
 			}
-			console.log('Phone: ', res[0]);
+/*			console.log('Phone: ', res[0]);
 			console.log('Carrier: ', res[1]);
 
 			console.log('Phone.GSMBands ', res[0].GSMBands.toString(2));
-			console.log('Carrier.GSM ', res[1][0].GSM.toString(2));
+			console.log('Carrier.GSM ', res[1][0].GSM.toString(2));*/
 
 			var phoneGSM = res[0].GSMBands;
-			var carrierGSM = res[1][0].GSM;
-			var output = (phoneGSM & carrierGSM).toString(2);
-			console.log('AND OP', output);
+			var carrierGSM = res[1];
+			
+		
+			var supportedCarriers = checkGSM(phoneGSM, carrierGSM);
+			console.log('carriernames', supportedCarriers);
+			req.phone.Support = supportedCarriers;
 
-			for(var i = 0; i < output.length; i++) {
-				if(output[i] && i === 0)
-					console.log('bit ' + i + ' is 1: 850' );
-				if(output[i] && i === 3)
-					console.log('bit ' + i + ' is 1: 1900' );
+			if(carrierGSM === null && phoneGSM === null){
+				next();
 			}
+			var output = (phoneGSM & carrierGSM).toString(2);
+			
+			/*if(output !== 0){
+				req.phone.Support = res[1][0].CarrierName;
+			}
+			*/
+			
+
+			console.log('phone', req.phone);
 
 			next();
 		});
 
 };
+
 
 /*exports.phoneByID = function(req, res, next, id) { 
 	Phone.findById(id).exec(function(err, phone) {
@@ -265,8 +291,8 @@ exports.phoneByID = function(req, res, next, id){
 	
 		next();
 	});
-};
-*/
+};*/
+
 
 
 
