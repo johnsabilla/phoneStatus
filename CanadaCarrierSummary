@@ -1,0 +1,17 @@
+Carrier=Rogers Wireless
+Country=Canada
+GSM= 850,900,1900,1800
+UMTS=5,2
+LTEFDD=17,4,7
+
+Carrier=Telus
+Country=Canada
+CDMA=BC0 
+UMTS=5,2
+LTEFDD=4
+
+Carrier=Bell
+Country=Canada
+CDMA= BC0,BC1
+UMTS=5,2
+LTEFDD=4,7
