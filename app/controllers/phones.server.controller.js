@@ -192,7 +192,7 @@ exports.delete = function(req, res) {
 
 function checkGSM(phoneGSM, carrierGSM){
 
-	console.log('phoneGSM ', phoneGSM, ' CarrierGSM ', carrierGSM);
+	//console.log('phoneGSM ', phoneGSM, ' CarrierGSM ', carrierGSM);
 
 	var gsmBand = [1900, 1800, 900, 850, 0];
 	var output  = null;
@@ -203,11 +203,53 @@ function checkGSM(phoneGSM, carrierGSM){
 		output = (phoneGSM & carrier.GSM).toString(2);
 		//console.log('output is:', output);
 
-		if(output !== 0)
+		while(output.length < gsmBand.length){
+			output = 0 + output;
+		}
+
+		if(parseInt(output) !== 0 ){
 			carriers.push(carrier.CarrierName);
+		}
 		for(var i = 0; i < output.length; i++) {
-			if(output[i] === 1)
+			//console.log('outputdd: ', parseInt(output[i]) );
+			if(parseInt(output[i]) === 1)
 				console.log('a bit ' + i + ' is 1: ' + gsmBand[i]);
+		}
+	});
+	  
+	return carriers;
+}
+
+
+
+function checkUMTS(phoneUMTS, carrierUMTS){
+
+	//console.log('phoneUMTS: ', phoneUMTS, ' CarrierUMTS: ', carrierUMTS);
+
+	var UMTSBand = [32,26,25,22,21,20,19,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
+
+	var output  = null;
+	var carriers = [];
+	carrierUMTS.forEach(function(carrier){
+
+		//console.log('carrier UMTS :', carrier.UMTS);
+
+		output = (phoneUMTS & carrier.UMTS).toString(2);
+		//console.log('output is:', output );
+
+		while(output.length < UMTSBand.length){
+			output = 0 + output;
+		}
+		//console.log('output padded: ', output);
+
+		if( parseInt(output) !== 0){
+			carriers.push(carrier.CarrierName);
+		}
+
+		for(var i = 0; i < output.length; i++) {
+			//console.log('outputdd: ', parseInt(output[i]) );
+			if( parseInt(output[i]) === 1)
+				console.log('a bit ' + i + ' is 1: ' + UMTSBand[i]);
 		}
 	});
 	  
@@ -255,20 +297,26 @@ exports.phoneByID = function(req, res, next, id){
 			console.log('Phone.GSMBands ', res[0].GSMBands.toString(2));
 			console.log('Carrier.GSM ', res[1][0].GSM.toString(2));*/
 
-			var phoneGSM = res[0].GSMBands;
-			var carrierGSM = res[1];
-			
+			var phone = res[0];
+			var carrier = res[1];
+			var supportedCarriers = [];
 		
-			var supportedCarriers = checkGSM(phoneGSM, carrierGSM);
+			supportedCarriers.push(checkGSM(phone.GSMBands, carrier));
 			console.log('carriernames', supportedCarriers);
+
+			supportedCarriers.push(checkUMTS(phone.UMTSBands, carrier));
+			console.log('carriernames', supportedCarriers);
+
 			req.phone.Support = supportedCarriers;
 
-			if(carrierGSM === null && phoneGSM === null){
+			if(carrier === null && phone === null){
 				next();
 			}
+
+			/*
 			var output = (phoneGSM & carrierGSM).toString(2);
 			
-			/*if(output !== 0){
+			if(output !== 0){
 				req.phone.Support = res[1][0].CarrierName;
 			}
 			*/
