@@ -7,7 +7,7 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 
 		// Create new phone
 		$scope.create = function() {
-
+	
 			// Create new phone object
 			var phone = new Phones ({
 				Name: this.name,
@@ -18,8 +18,9 @@ angular.module('phones').controller('PhonesController', ['$scope', '$stateParams
 				TDSCDMABands: this.tdscdmabands
 			});
 			
+
 			// Convert comma separated string to array of strings and add to phone
-/*			phone.GSMBands.push.apply(phone.GSMBands, this.gsmbands.split(','));
+		  /*phone.GSMBands.push.apply(phone.GSMBands, this.gsmbands.split(','));
 			phone.LTEFDDBands.push.apply(phone.LTEFDDBands, this.ltefddbands.split(','));
 			phone.UMTSBands.push.apply(phone.UMTSBands, this.umtsbands.split(','));
 			phone.TDSCDMABands.push.apply(phone.TDSCDMABands, this.tdscdmabands.split(','));*/
