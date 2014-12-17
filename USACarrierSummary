@@ -1,0 +1,22 @@
+Carrier=AT&T
+Country=USA
+GSM= 850, 1900
+UMTS= 5,2
+LTEFDD=17,4,2,30
+
+Carrier=Verizon
+Country=USA
+CDMA=0,1
+LTEFDD=13,4,2
+
+Carrier=T-Mobile
+Country=USA
+GSM=850,1900
+LTEFDD=4,12,2
+UMTS=4,5,2
+
+Carrier=Sprint
+Country=USA
+CDMA=10,1
+LTEFDD=26,25
+LTETDD=41

@@ -1,0 +1,19 @@
+Carrier=China Mobile
+Country=China
+GSM= 900, 1800
+TDSCDMA= 2000,1901
+LTEFDD=8
+LTETDD=39,40,41,38,44
+
+Carrier=China Telecom
+Country=China
+CDMA= BC0, BC6
+LTEFDD=1,3
+LTETDD=40,41
+
+Carrier=China Unicom
+Country=China
+GSM=900,1800
+UMTS=1,8
+LTEFDD=1,3
+LTETDD=40,41
