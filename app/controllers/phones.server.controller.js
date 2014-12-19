@@ -233,7 +233,6 @@ function checkUMTS(phoneUMTS, carrierUMTS){
 	carrierUMTS.forEach(function(carrier){
 
 		//console.log('carrier UMTS :', carrier.UMTS);
-
 		output = (phoneUMTS & carrier.UMTS).toString(2);
 		//console.log('output is:', output );
 
@@ -255,6 +254,75 @@ function checkUMTS(phoneUMTS, carrierUMTS){
 	  
 	return carriers;
 }
+
+function checkCDMA(phoneCDMA, carrierCDMA){
+
+	//console.log('phoneCDMA: ', phoneCDMA, ' CarrierCDMA: ', carrierCDMA);
+
+	var CDMABand = [21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
+
+	var output  = null;
+	var carriers = [];
+	carrierCDMA.forEach(function(carrier){
+
+		//console.log('carrier CDMA :', carrier.CDMA);
+		output = (phoneCDMA & carrier.CDMA).toString(2);
+		//console.log('output is:', output );
+
+		//apply padding
+		while(output.length < CDMABand.length){
+			output = 0 + output;
+		}
+		//console.log('output padded: ', output);
+
+		if( parseInt(output) !== 0){
+			carriers.push(carrier.CarrierName);
+		}
+
+		for(var i = 0; i < output.length; i++) {
+			//console.log('outputdd: ', parseInt(output[i]) );
+			if( parseInt(output[i]) === 1)
+				console.log('a bit ' + i + ' is 1: ' + CDMABand[i]);
+		}
+	});
+	  
+	return carriers;
+}
+
+function checkLTE(phoneLTE, carrierLTE){
+
+	console.log('phoneLTE: ', phoneLTE, ' CarrierLTE: ', carrierLTE);
+
+	var LTEBand = [44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
+
+	var output  = null;
+	var carriers = [];
+	carrierLTE.forEach(function(carrier){
+
+		//console.log('carrier LTE :', carrier.LTE);
+		output = (phoneLTE & carrier.LTE).toString(2);
+		//console.log('output is:', output );
+
+		//apply padding
+		while(output.length < LTEBand.length){
+			output = 0 + output;
+		}
+		//console.log('output padded: ', output);
+
+		if( parseInt(output) !== 0){
+			carriers.push(carrier.CarrierName);
+		}
+
+		for(var i = 0; i < output.length; i++) {
+			//console.log('outputdd: ', parseInt(output[i]) );
+			if( parseInt(output[i]) === 1)
+				console.log('a bit ' + i + ' is 1: ' + LTEBand[i]);
+		}
+	});
+	  
+	return carriers;
+}
+
 
 exports.phoneByID = function(req, res, next, id){
 
@@ -302,9 +370,15 @@ exports.phoneByID = function(req, res, next, id){
 			var supportedCarriers = [];
 		
 			supportedCarriers.push(checkGSM(phone.GSMBands, carrier));
-			console.log('carriernames', supportedCarriers);
+			//console.log('carriernames', supportedCarriers);
 
 			supportedCarriers.push(checkUMTS(phone.UMTSBands, carrier));
+			//console.log('carriernames', supportedCarriers);
+
+			supportedCarriers.push(checkCDMA(phone.TDSCDMABands, carrier));
+			//console.log('carriernames', supportedCarriers);
+
+			supportedCarriers.push(checkLTE(phone.LTEFDDBands, carrier));
 			console.log('carriernames', supportedCarriers);
 
 			req.phone.Support = supportedCarriers;
