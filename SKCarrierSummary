@@ -1,0 +1,14 @@
+Carrier=LG U+
+Country=South Korea
+LTEFDD=5,1,7
+
+Carrier=SK Telecom
+Country=South Korea
+CDMA=BC0
+UMTS=1 
+LTEFDD=5,3
+
+Carrier=KT
+Country=South Korea
+UMTS=1
+LTEFDD=26,8,3

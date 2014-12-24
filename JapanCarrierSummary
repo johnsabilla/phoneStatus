@@ -1,0 +1,15 @@
+Carrier=NTT Docomo
+Country=Japan
+UMTS=19,9,1
+LTEFDD=19,21,3,9,1
+
+Carrier=SoftBank
+Country=Japan
+UMTS=8,11,1
+LTEFDD=1
+LTETDD=41
+
+Carrier=Ymobile
+Country=Japan
+UMTS=8,11,1
+LTEFDD=3,9
