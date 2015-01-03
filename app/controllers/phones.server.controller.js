@@ -210,11 +210,11 @@ function checkGSM(phoneGSM, carrierGSM){
 		if(parseInt(output) !== 0 ){
 			carriers.push(carrier.CarrierName);
 		}
-		for(var i = 0; i < output.length; i++) {
+/*		for(var i = 0; i < output.length; i++) {
 			//console.log('outputdd: ', parseInt(output[i]) );
 			if(parseInt(output[i]) === 1)
 				console.log('a bit ' + i + ' is 1: ' + gsmBand[i]);
-		}
+		}*/
 	});
 	  
 	return carriers;
@@ -245,11 +245,11 @@ function checkUMTS(phoneUMTS, carrierUMTS){
 			carriers.push(carrier.CarrierName);
 		}
 
-		for(var i = 0; i < output.length; i++) {
+/*		for(var i = 0; i < output.length; i++) {
 			//console.log('outputdd: ', parseInt(output[i]) );
 			if( parseInt(output[i]) === 1)
 				console.log('a bit ' + i + ' is 1: ' + UMTSBand[i]);
-		}
+		}*/
 	});
 	  
 	return carriers;
@@ -279,11 +279,11 @@ function checkCDMA(phoneCDMA, carrierCDMA){
 			carriers.push(carrier.CarrierName);
 		}
 
-		for(var i = 0; i < output.length; i++) {
+/*		for(var i = 0; i < output.length; i++) {
 			//console.log('outputdd: ', parseInt(output[i]) );
 			if( parseInt(output[i]) === 1)
 				console.log('a bit ' + i + ' is 1: ' + CDMABand[i]);
-		}
+		}*/
 	});
 	  
 	return carriers;
@@ -313,11 +313,11 @@ function checkLTE(phoneLTE, carrierLTE){
 			carriers.push(carrier.CarrierName);
 		}
 
-		for(var i = 0; i < output.length; i++) {
+/*		for(var i = 0; i < output.length; i++) {
 			//console.log('outputdd: ', parseInt(output[i]) );
 			if( parseInt(output[i]) === 1)
 				console.log('a bit ' + i + ' is 1: ' + LTEBand[i]);
-		}
+		}*/
 	});
 	  
 	return carriers;
