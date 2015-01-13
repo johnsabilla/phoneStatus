@@ -99,96 +99,6 @@ exports.delete = function(req, res) {
 	});
 };
 
-/* phyByID - grabs all of the phone information.
- *			 We also compare if any of the supported bands
- *			 are supported by a specific carrier. 
- */
-/*exports.phoneByIDback = function(req, res, next, id) { 
-
-			async.parallel([
-
-			function(callback) {
-				Phone.findById(id).exec(function(err, phone) {
-					if (err) return next(err);
-					if (!phone) return next(new Error('Failed to load Phone ' + id));
-					req.phone = phone;
-			
-					callback(null,phone);
-				});
-			},
-
-			function(callback) {
-				Band.find().populate('Carrier', 'CarrierName').exec(function(err, bands) {
-					if(err) return callback(err);
-					if(!bands) return callback(new Error('Failed to load Band '));
-
-				//	console.log('bands inside', bands.carrier);
-
-					callback(null, bands);
-				});
-			}
-
-			],
-
-			function(err,res) {
-				if(err){
-					console.log(err);
-					return res.status(400).send('error occured');
-				}
-
-				if(res === null || res[0] === null || res[1] === null) {
-					return res.status(400).send('objects are null');
-				}
-
-				var bands = res[1];
-				var phone = res[0];
-
-				//console.log('bands ', bands[0]);
-				//console.log('phones ', phone);
-
-				var sbands=[];
-				var sphoneGSM = phone.GSMBands;
-				var sphoneLTEFDD = phone.LTEFDDBands;			
-
-				//query all bands that are GSM
-				for(var x = 0; x < bands.length; x++){
-					if(bands[x].Protocol === 'GSM'){
-						sbands.push(bands[x]);
-					}
-				}
-
-				//sort the bands
-				sbands = sbands.sort(function(a,b){
-				 	return a-b;
-				});
-
-				//sort the GSM bands supported by phone
-				sphoneGSM = sphoneGSM.sort(function(a,b) {
-					return a-b;
-				});
-
-				console.log('bands ', sbands);
-				console.log('phones ', sphoneGSM);
-
-				//find a band that the phone supports
-				for(var a = 0; a < sphoneGSM.length; a++){
-					for(var b = 0; b < sbands.length; b++){
-						if(sphoneGSM[a] === sbands[b].Band){
-							
-							phone.Band = 'yes, match: ' + sphoneGSM[a] + ' ' + sbands[b].Carrier.CarrierName;
-								
-							//console.log('phone.Band', phone.Band);
-							//console.log('we have a match', sphoneGSM[a], sbands[b]);
-								
-							break;
-							
-						}
-					}
-				}
-				next();
-			});
-
-};*/
 
 function checkGSM(phoneGSM, carrierGSM){
 
@@ -262,7 +172,7 @@ function checkCDMA(phoneCDMA, carrierCDMA){
 	var CDMABand = [21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
 
 	var output  = null;
-	var carriers = [];
+	var carriers = null;
 	carrierCDMA.forEach(function(carrier){
 
 		//console.log('carrier CDMA :', carrier.CDMA);
@@ -370,31 +280,22 @@ exports.phoneByID = function(req, res, next, id){
 			var supportedCarriers = [];
 		
 			supportedCarriers.push(checkGSM(phone.GSMBands, carrier));
-			//console.log('carriernames', supportedCarriers);
-
 			supportedCarriers.push(checkUMTS(phone.UMTSBands, carrier));
-			//console.log('carriernames', supportedCarriers);
-
 			supportedCarriers.push(checkCDMA(phone.TDSCDMABands, carrier));
-			//console.log('carriernames', supportedCarriers);
-
 			supportedCarriers.push(checkLTE(phone.LTEFDDBands, carrier));
-			console.log('carriernames', supportedCarriers);
+			//supportedCarriers = supportedCarriers.join('').split(',');
 
-			req.phone.Support = supportedCarriers;
 
+			 var uniqueArray = supportedCarriers.filter(function(elem, pos) {
+    			return supportedCarriers.indexOf(elem) === pos;
+  			}); 
+
+			 req.phone.Support = uniqueArray;
+			console.log('supported: ', req.phone.Support);
 			if(carrier === null && phone === null){
 				next();
 			}
 
-			/*
-			var output = (phoneGSM & carrierGSM).toString(2);
-			
-			if(output !== 0){
-				req.phone.Support = res[1][0].CarrierName;
-			}
-			*/
-			
 
 			console.log('phone', req.phone);
 
@@ -402,23 +303,6 @@ exports.phoneByID = function(req, res, next, id){
 		});
 
 };
-
-
-/*exports.phoneByID = function(req, res, next, id) { 
-	Phone.findById(id).exec(function(err, phone) {
-		if (err) return next(err);
-		if (!phone) return next(new Error('Failed to load Phone ' + id));
-		
-		req.phone = phone;
-	
-		next();
-	});
-};*/
-
-
-
-
-
 
 
 

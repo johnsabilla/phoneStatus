@@ -6,9 +6,9 @@
     	
     	<div class="controls">
     		<label class="control-label" for="modelnumber">Search</label>
-    	 	<input ng-model="searchText" class="form-control" placeholder="Enter phone ModelNumber or Name">
+    	 	<input ng-model="searchText" class="form-control" placeholder="Enter ModelNumber or Name">
     	</div>
-        <a data-ng-repeat="phone in phones | filter:searchText" data-ng-href="#!/phones/{{phone._id}}" class="list-group-item">
+        <a ng-if="searchText" data-ng-repeat="phone in phones | filter:searchText" data-ng-href="#!/phones/{{phone._id}}" class="list-group-item">
 			Name:
 			<h4 class="list-group-item-heading" data-ng-bind="phone.Name"></h4>
 			ModelNumber:
